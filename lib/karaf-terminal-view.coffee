@@ -65,7 +65,7 @@ class KarafTerminalView extends View
       env:
         "TERM": "xterm-color"
         "HOME": process.env.HOME
-      stdio: 'pipe'
+      stdio: 'inherit'
 
     #spawn rbx, [pty, @opts.shell], options
     spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
