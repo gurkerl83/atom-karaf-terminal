@@ -73,7 +73,8 @@ class KarafTerminalView extends View
       stdio: 'inherit'
 
     #spawn rbx, [pty, @opts.shell], options
-    spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
+    #spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
+    spawn path.resolve(__dirname + '/karaf/bin/karaf'), [], options
 
   initialize: (@state) ->
     {cols, rows} = @getDimensions()
