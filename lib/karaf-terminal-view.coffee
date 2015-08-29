@@ -5,7 +5,9 @@ fs = require 'fs-plus'
 spawn = require('child_process').spawn
 
 debounce = require 'debounce'
-Terminal = require './vendor/term.js'
+
+#Terminal = require './vendor/term.js'
+Terminal = require '../vendor/term.js'
 
 keypather = do require 'keypather'
 
