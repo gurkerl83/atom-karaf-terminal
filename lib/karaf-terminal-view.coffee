@@ -84,8 +84,8 @@ class KarafTerminalView extends View
     [@ptyRead, @ptyWrite] = [@ptyProcess.stdin, @ptyProcess.stdout]
 
     @ptyWrite.on 'data', (data) =>
-      #@terminal.write data.toString()
-      @terminal.write data
+      @terminal.write data.toString()
+      #@terminal.write data
 
     @ptyProcess.on 'exit', (code, signal) => @destroy()
 
