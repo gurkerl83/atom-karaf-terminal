@@ -63,16 +63,15 @@ class KarafTerminalView extends View
     options =
       cwd: @opts.cwd
       env:
+        "PS1": "\\w\\$ "
+        "PS2": "> "
+        "PS4": "+ "
+        "TERM": "xterm-color"
         "HOME": process.env.HOME
       stdio: 'pipe'
 
     #spawn rbx, [pty, @opts.shell], options
-    #spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
-    #spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
-
-    spawn(path.resolve(__dirname + '/karaf/bin/karaf'), [], {
-      stdio: 'inherit'
-    });
+    spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
 
   initialize: (@state) ->
     {cols, rows} = @getDimensions()
