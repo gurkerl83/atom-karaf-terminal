@@ -1,0 +1,59 @@
+# See https://atom.io/docs/latest/creating-a-package#menus for more details
+'context-menu':
+  'atom-karaf-terminal': [
+    {
+      'label': 'Karaf Terminal'
+      'submenu': [
+        {
+          'label': 'Open'
+          'command': 'atom-karaf-terminal:open'
+        }
+        {
+          'label': 'Split Right'
+          'command': 'atom-karaf-terminal:split-right'
+        }
+        {
+          'label': 'Split Left'
+          'command': 'atom-karaf-terminal:split-left'
+        }
+        {
+          'label': 'Split Up'
+          'command': 'atom-karaf-terminal:split-up'
+        }
+        {
+          'label': 'Split Down'
+          'command': 'atom-karaf-terminal:split-down'
+        }
+      ]
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Karaf Terminal'
+      'submenu': [
+        {
+          'label': 'Open'
+          'command': 'atom-karaf-terminal:open'
+        }
+        {
+          'label': 'Split Right'
+          'command': 'atom-karaf-terminal:split-right'
+        }
+        {
+          'label': 'Split Left'
+          'command': 'atom-karaf-terminal:split-left'
+        }
+        {
+          'label': 'Split Up'
+          'command': 'atom-karaf-terminal:split-up'
+        }
+        {
+          'label': 'Split Down'
+          'command': 'atom-karaf-terminal:split-down'
+        }
+      ]
+    ]
+  }
+]

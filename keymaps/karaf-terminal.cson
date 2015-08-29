@@ -1,0 +1,19 @@
+# Keybindings require three things to be fully defined: A selector that is
+# matched against the focused element, the keystroke and the command to
+# execute.
+#
+# Below is a basic keybinding which registers on all platforms by applying to
+# the root workspace element.
+
+# For more detailed documentation see
+# https://atom.io/docs/latest/advanced/keymaps
+'atom-workspace':
+  'ctrl-alt-T': 'atom-karaf-terminal:open'
+  'ctrl-alt-right': 'atom-karaf-terminal:split-right'
+  'ctrl-alt-left': 'atom-karaf-terminal:split-left'
+  'ctrl-alt-up': 'atom-karaf-terminal:split-up'
+  'ctrl-alt-down': 'atom-karaf-terminal:split-down'
+
+'.karaf-terminal':
+  'cmd-v': 'atom-karaf-terminal:paste'
+  'ctrl-v': 'atom-karaf-terminal:paste'

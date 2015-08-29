@@ -1,0 +1,26 @@
+{
+  "name": "atom-karaf-terminal",
+  "main": "./lib/karaf-terminal",
+  "version": "0.0.3",
+  "description": "Opens a terminal tab within Atom that is configured to run Karaf",
+  "activationCommands": {
+    "atom-workspace": [
+      "atom-karaf-terminal:open",
+      "atom-karaf-terminal:split-left",
+      "atom-karaf-terminal:split-right",
+      "atom-karaf-terminal:split-up",
+      "atom-karaf-terminal:split-down"
+    ]
+  },
+  "repository": "https://github.com/gurkerl83/atom-karaf-terminal",
+  "license": "MPL/2.0",
+  "engines": {
+    "atom": ">=0.182.0 <2.0.0"
+  },
+  "dependencies": {
+    "atom-space-pen-views": "^2.0.3",
+    "debounce": "0.0.3",
+    "fs-plus": "^2.2.3",
+    "keypather": "^1.3.2"
+  }
+}
