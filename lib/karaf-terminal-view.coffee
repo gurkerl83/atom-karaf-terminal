@@ -60,6 +60,8 @@ class KarafTerminalView extends View
 
     process.env['JAVA_HOME'] = path.resolve(__dirname + '/jre/Contents/Home');
 
+    #stdio: 'pipe'
+
     options =
       cwd: @opts.cwd
       env:
@@ -68,7 +70,7 @@ class KarafTerminalView extends View
         "PS4": "+ "
         "TERM": "xterm-color"
         "HOME": process.env.HOME
-      stdio: 'pipe'
+      stdio: 'inherit'
 
     #spawn rbx, [pty, @opts.shell], options
     spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
