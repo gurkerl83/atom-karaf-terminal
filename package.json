@@ -1,8 +1,13 @@
 {
   "name": "atom-karaf-terminal",
   "main": "./lib/karaf-terminal",
-  "version": "0.0.3",
+  "version": "0.0.0",
   "description": "Opens a terminal tab within Atom that is configured to run Karaf",
+  "keywords": [
+    "atom",
+    "karaf",
+    "shell"
+  ],
   "activationCommands": {
     "atom-workspace": [
       "atom-karaf-terminal:open",
