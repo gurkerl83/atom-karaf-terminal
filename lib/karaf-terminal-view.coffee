@@ -184,7 +184,7 @@ class KarafTerminalView extends View
 
   getDimensions: ->
     fakeRow = $("<div><span>&nbsp;</span></div>").css visibility: 'hidden'
-    if @term
+    if @terminal
       @find('.terminal').append fakeRow
       fakeCol = fakeRow.children().first()
       cols = Math.floor (@width() / fakeCol.width()) or 9
