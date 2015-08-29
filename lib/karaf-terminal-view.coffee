@@ -70,7 +70,7 @@ class KarafTerminalView extends View
         "PS4": "+ "
         "TERM": "xterm-color"
         "HOME": process.env.HOME
-      stdio: 'inherit'
+      stdio: 'pipe'
 
     #spawn rbx, [pty, @opts.shell], options
     spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
