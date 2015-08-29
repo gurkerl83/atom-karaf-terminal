@@ -167,7 +167,10 @@ class KarafTerminalView extends View
     fakeCol = $("<span id='colSize'>&nbsp;</span>").css visibility: 'hidden'
     if @terminal
       @find('.terminal').append fakeCol
-      fakeCol = @find(".terminal span#colSize")
+
+      #fakeCol = @find(".terminal span#colSize")
+      fakeCol = fakeRow.children().first()
+
       cols = Math.floor (@width() / fakeCol.width()) or 9
       rows = Math.floor (@height() / fakeCol.height()) or 16
       fakeCol.remove()
