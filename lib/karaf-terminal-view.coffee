@@ -63,9 +63,6 @@ class KarafTerminalView extends View
     options =
       cwd: @opts.cwd
       env:
-        "PS1": "\\w\\$ "
-        "PS2": "> "
-        "PS4": "+ "
         "TERM": "xterm-color"
         "HOME": process.env.HOME
       stdio: 'pipe'
