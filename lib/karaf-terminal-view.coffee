@@ -163,6 +163,7 @@ class KarafTerminalView extends View
     # but this code does not translate:
     # atom.views.getView(pane).css overflow: 'visible'
 
+  ###
   getDimensions: ->
     fakeCol = $("<span id='colSize'>&nbsp;</span>").css visibility: 'hidden'
     if @terminal
@@ -171,6 +172,21 @@ class KarafTerminalView extends View
       #fakeCol = @find(".terminal span#colSize")
       fakeCol = fakeRow.children().first()
 
+      cols = Math.floor (@width() / fakeCol.width()) or 9
+      rows = Math.floor (@height() / fakeCol.height()) or 16
+      fakeCol.remove()
+    else
+      cols = Math.floor @width() / 7
+      rows = Math.floor @height() / 14
+
+    {cols, rows}
+  ###
+
+  getDimensions: ->
+    fakeRow = $("<div><span>&nbsp;</span></div>").css visibility: 'hidden'
+    if @term
+      @find('.terminal').append fakeRow
+      fakeCol = fakeRow.children().first()
       cols = Math.floor (@width() / fakeCol.width()) or 9
       rows = Math.floor (@height() / fakeCol.height()) or 16
       fakeCol.remove()
