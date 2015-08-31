@@ -84,8 +84,37 @@ class KarafTerminalView extends View
     @ptyProcess = @createPTY args
     [@ptyRead, @ptyWrite] = [@ptyProcess.stdin, @ptyProcess.stdout]
 
+    ###
     @ptyWrite.on 'data', (data) =>
       @terminal.write data.toString().split('\n');
+    ###
+
+    @ptyWrite.on 'data', (data) =>
+      out = data.toString()
+      lines = out.split('\n')
+
+      console.log(lines);
+
+      if lines.length > 1
+        lines = lines.slice(1)
+        packages = []
+        lines.forEach (line) ->
+          if line.length > 0
+            parts = line.split(/\s+/)
+            pack = parts[0]
+            current = parts[1]
+            wanted = parts[2]
+            if wanted != current
+              packages.push
+                name: pack
+                current: current
+                wanted: wanted
+          return
+        if packages.length > 0
+          packages.forEach (p) ->
+            console.log p.name + '\u9' + p.current + ' => ' + p.wanted
+            return
+      return
 
     @ptyProcess.on 'exit', (code, signal) => @destroy()
 
