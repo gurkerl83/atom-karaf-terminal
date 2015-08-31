@@ -112,7 +112,8 @@ class KarafTerminalView extends View
           return
         if packages.length > 0
           packages.forEach (p) ->
-            console.log p.name + '\u9' + p.current + ' => ' + p.wanted
+            #@terminal.write p.name + '\u9' + p.current + ' => ' + p.wanted
+            @terminal.write p.name + ' Test ' + p.current + ' => ' + p.wanted
             return
       return
 
