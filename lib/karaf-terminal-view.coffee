@@ -70,7 +70,7 @@ class KarafTerminalView extends View
         "PS4": "+ "
         "TERM": "xterm-color"
         "HOME": process.env.HOME
-      stdio: 'inherit'
+      stdio: 'pipe'
 
     #spawn rbx, [pty, @opts.shell], options
     #spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
@@ -85,8 +85,7 @@ class KarafTerminalView extends View
     [@ptyRead, @ptyWrite] = [@ptyProcess.stdin, @ptyProcess.stdout]
 
     @ptyWrite.on 'data', (data) =>
-      #@terminal.write data.toString()
-      @terminal.write data
+      @terminal.write data.toString().split('\n');
 
     @ptyProcess.on 'exit', (code, signal) => @destroy()
 
