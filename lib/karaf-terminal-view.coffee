@@ -5,11 +5,7 @@ fs = require 'fs-plus'
 spawn = require('child_process').spawn
 
 debounce = require 'debounce'
-
-#Terminal = require './vendor/term.js'
-Terminal = require '../vendor/term.js'
-
-splitter = require 'stream-splitter'
+Terminal = require './vendor/term.js'
 
 keypather = do require 'keypather'
 
@@ -21,7 +17,7 @@ renderTemplate = (template, data)->
   vars = Object.keys data
   vars.reduce (_template, key)->
     _template.split(///\{\{\s*#{key}\s*\}\}///)
-    .join data[key]
+      .join data[key]
   , template.toString()
 
 class KarafTerminalView extends View
@@ -35,8 +31,8 @@ class KarafTerminalView extends View
 
     editorPath = keypather.get atom, 'workspace.getEditorViews[0].getEditor().getPath()'
     opts.cwd = fs.absolute(opts.cwd or
-        atom.project.getPaths()[0] or
-        editorPath or process.env.HOME)
+      atom.project.getPaths()[0] or
+      editorPath or process.env.HOME)
     super
 
   ###
@@ -62,8 +58,6 @@ class KarafTerminalView extends View
 
     process.env['JAVA_HOME'] = path.resolve(__dirname + '/jre/Contents/Home');
 
-    #stdio: 'pipe'
-
     options =
       cwd: @opts.cwd
       env:
@@ -75,8 +69,7 @@ class KarafTerminalView extends View
       stdio: 'pipe'
 
     #spawn rbx, [pty, @opts.shell], options
-    #spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
-    spawn path.resolve(__dirname + '/karaf/bin/karaf'), [], options
+    spawn path.resolve(__dirname + '/karaf/bin/karaf'), [@opts.shell], options
 
   initialize: (@state) ->
     {cols, rows} = @getDimensions()
@@ -86,59 +79,8 @@ class KarafTerminalView extends View
     @ptyProcess = @createPTY args
     [@ptyRead, @ptyWrite] = [@ptyProcess.stdin, @ptyProcess.stdout]
 
-    ###
     @ptyWrite.on 'data', (data) =>
-      @terminal.write data.toString().split('\n');
-    ###
-
-    ###
-    @ptyWrite.on 'data', (data) =>
-      out = data.toString()
-      lines = out.split('\n')
-
-      console.log(lines);
-
-      if lines.length > 1
-        lines = lines.slice(1)
-        packages = []
-        lines.forEach (line) ->
-          if line.length > 0
-            parts = line.split(/\s+/)
-            pack = parts[0]
-            current = parts[1]
-            wanted = parts[2]
-            if wanted != current
-              packages.push
-                name: pack
-                current: current
-                wanted: wanted
-          return
-        if packages.length > 0
-          #.bind(@)
-          packages.forEach (p) ->
-            #@terminal.write p.name + '\u9' + p.current + ' => ' + p.wanted
-            #@terminal.write p.name + ' Test ' + p.current + ' => ' + p.wanted
-            console.log(p.name + ' Test ' + p.current + ' => ' + p.wanted)
-            return
-      return
-    ###
-
-    ###
-    @ptyWrite.on 'data', @filterStdoutDataDumpsToTextLines((line) =>
-      #each time this inner function is called, you will be getting a single, complete line of the stdout ^^
-
-      console.log(line)
-
-      @terminal.write line
-
-    ).bind(this)
-    ###
-
-    splitter = @ptyWrite.pipe(StreamSplitter('\n')
-    splitter.encoding = 'utf8'
-
-    splitter.on 'token', (token) =>
-      @terminal.write token + '\n';
+      @terminal.write data.toString()
 
     @ptyProcess.on 'exit', (code, signal) => @destroy()
 
@@ -165,7 +107,7 @@ class KarafTerminalView extends View
     @ptyRead.write data
 
   resize: (cols, rows) ->
-# TODO: previously: @ptyProcess.send {event: 'resize', rows, cols}
+    # TODO: previously: @ptyProcess.send {event: 'resize', rows, cols}
 
   titleVars: ->
     bashName: last @opts.shell.split '/'
@@ -181,7 +123,7 @@ class KarafTerminalView extends View
   attachEvents: ->
     @resizeToPane = @resizeToPane.bind this
     @attachResizeEvents()
-# @command "atom-karaf-terminal:paste", => @paste()
+    # @command "atom-karaf-terminal:paste", => @paste()
 
   paste: ->
     @input atom.clipboard.read()
@@ -213,36 +155,15 @@ class KarafTerminalView extends View
     @resize cols, rows
     @terminal.resize cols, rows
     pane = atom.workspace.getActivePane()
-  # TODO: Fixed deprecation on atom.workspaceView.getActivePaneView()
-  # but this code does not translate:
-  # atom.views.getView(pane).css overflow: 'visible'
-
-  _breakOffFirstLine = /\r?\n/
-
-  filterStdoutDataDumpsToTextLines: (callback) ->
-#returns a function that takes chunks of stdin data, aggregates it, and passes lines one by one through to callback, all as soon as it gets them.
-    acc = ''
-    (data) ->
-      splitted = data.toString().split(_breakOffFirstLine)
-      inTactLines = splitted.slice(0, splitted.length - 1)
-      inTactLines[0] = acc+inTactLines[0] #if there was a partial, unended line in the previous dump, it is completed by the first section.
-      acc = splitted[splitted.length - 1]
-      #if there is a partial, unended line in this dump, store it to be completed by the next (we assume there will be a terminating newline at some point. This is, generally, a safe assumption.)
-      i = 0
-      while i < inTactLines.length
-        callback inTactLines[i]
-        ++i
-      return
-
+    # TODO: Fixed deprecation on atom.workspaceView.getActivePaneView()
+    # but this code does not translate:
+    # atom.views.getView(pane).css overflow: 'visible'
 
   getDimensions: ->
     fakeCol = $("<span id='colSize'>&nbsp;</span>").css visibility: 'hidden'
     if @terminal
       @find('.terminal').append fakeCol
-
       fakeCol = @find(".terminal span#colSize")
-      #fakeCol = fakeRow.children().first()
-
       cols = Math.floor (@width() / fakeCol.width()) or 9
       rows = Math.floor (@height() / fakeCol.height()) or 16
       fakeCol.remove()
@@ -251,22 +172,6 @@ class KarafTerminalView extends View
       rows = Math.floor @height() / 14
 
     {cols, rows}
-
-  ###
-  getDimensions: ->
-    fakeRow = $("<div><span>&nbsp;</span></div>").css visibility: 'hidden'
-    if @terminal
-      @find('.terminal').append fakeRow
-      fakeCol = fakeRow.children().first()
-      cols = Math.floor (@width() / fakeCol.width()) or 9
-      rows = Math.floor (@height() / fakeCol.height()) or 16
-      fakeCol.remove()
-    else
-      cols = Math.floor @width() / 7
-      rows = Math.floor @height() / 14
-
-    {cols, rows}
-  ###
 
   destroy: ->
     @detachResizeEvents()
